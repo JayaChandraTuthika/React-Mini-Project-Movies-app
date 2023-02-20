@@ -1,0 +1,11 @@
+.navbar-bg {
+  background-image: url('https://res.cloudinary.com/dds8wfxdw/image/upload/v1676920030/CCBP-mini%20projects/Movies%20website%20%28netflix%2Cprime%20clone%29/assets/Home%20page/Navbar-bg_z76pxk.svg');
+  background-size: cover;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 15px 10%;
+}
+.website-logo {
+  height: 45px;
+}
