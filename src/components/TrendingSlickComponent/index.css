@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600&display=swap');
 * {
   /* border: 1px solid blue; */
   font-family: 'roboto';
@@ -10,18 +11,16 @@
 }
 .slick-loader-container {
   background-color: #0d0d0d;
-  padding: 5%;
+  height: 265px;
   display: flex;
   justify-content: center;
   margin: 40px 10%;
-  border-radius: 10px;
 }
 .slick-movies-category-heading {
   color: white;
-  font-size: 40px;
+  font-size: 45px;
   font-weight: 500;
   margin-bottom: 0;
-  margin-top: 80px;
   margin-left: 6%;
 }
 .failure-container-fetching {

@@ -1,9 +1,8 @@
 import {Component} from 'react'
-import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
-import Header from '../Header'
+import Loader from 'react-loader-spinner'
+
 import SlickComponent from '../SlickComponent'
-import TrendingSlickComponent from '../TrendingSlickComponent'
 import './index.css'
 
 const statusConstants = {
@@ -13,28 +12,28 @@ const statusConstants = {
   failure: 'FAILURE',
 }
 
-class Home extends Component {
+class TrendingSlickComponent extends Component {
   state = {
-    headerStatus: statusConstants.initial,
-
-    originalsMoviesList: [],
+    trendingStatus: statusConstants.initial,
+    trendingMoviesList: [],
   }
 
   componentDidMount() {
-    this.getOriginalsMovies()
+    this.getTrendingMovies()
   }
 
-  getOriginalsMovies = async () => {
-    this.setState({headerStatus: statusConstants.inProgress})
+  getTrendingMovies = async () => {
+    this.setState({trendingStatus: statusConstants.inProgress})
     const jwtToken = Cookies.get('jwt_token')
-    const getOriginalsMoviesApiUrl = 'https://apis.ccbp.in/movies-app/originals'
+    const getTrendingMoviesApiUrl =
+      'https://apis.ccbp.in/movies-app/trending-movies'
     const options = {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
     }
-    const response = await fetch(getOriginalsMoviesApiUrl, options)
+    const response = await fetch(getTrendingMoviesApiUrl, options)
     if (response.ok === true) {
       const data = await response.json()
       const updatedData = data.results.map(each => ({
@@ -45,15 +44,22 @@ class Home extends Component {
         title: each.title,
       }))
       this.setState({
-        originalsMoviesList: updatedData,
-        headerStatus: statusConstants.success,
+        trendingMoviesList: updatedData,
+        trendingStatus: statusConstants.success,
       })
+    } else {
+      this.setState({trendingStatus: statusConstants.failure})
     }
   }
 
-  renderOriginals = () => {
-    const {originalsMoviesList} = this.state
-    return <SlickComponent moviesList={originalsMoviesList} />
+  renderTrendingSlick = () => {
+    console.log('inside')
+    const {trendingMoviesList} = this.state
+    return <SlickComponent moviesList={trendingMoviesList} />
+  }
+
+  onRetryData = () => {
+    this.getTrendingMovies()
   }
 
   renderLoaderSLickComponent = () => (
@@ -61,10 +67,6 @@ class Home extends Component {
       <Loader type="TailSpin" color="#D81F26" height={50} width={50} />
     </div>
   )
-
-  onRetryData = () => {
-    this.getOriginalsMovies()
-  }
 
   renderFailureSlickData = () => (
     <div className="failure-container-fetching">
@@ -87,40 +89,26 @@ class Home extends Component {
   )
 
   render() {
-    const {originalsMoviesList, headerStatus} = this.state
+    const {trendingStatus} = this.state
+    let trending
 
-    let originals
-
-    switch (headerStatus) {
+    switch (trendingStatus) {
       case statusConstants.success:
-        originals = this.renderOriginals()
+        trending = this.renderTrendingSlick()
         break
       case statusConstants.inProgress:
-        originals = this.renderLoaderSLickComponent()
+        trending = this.renderLoaderSLickComponent()
         break
       case statusConstants.failure:
-        originals = this.renderFailureSlickData()
+        trending = this.renderFailureSlickData()
         break
-      default:
-        originals = null
 
+      default:
+        trending = null
         break
     }
-
-    return (
-      <div className="home-bg-container">
-        <Header
-          originalsMoviesList={originalsMoviesList}
-          headerStatus={headerStatus}
-          onRetryData={this.onRetryData}
-        />
-        <h1 className="slick-movies-category-heading">Trending</h1>
-        <TrendingSlickComponent />
-        <h1 className="slick-movies-category-heading">Originals</h1>
-        {originals}
-      </div>
-    )
+    return trending
   }
 }
 
-export default Home
+export default TrendingSlickComponent
