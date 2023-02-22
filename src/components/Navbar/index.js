@@ -3,36 +3,40 @@ import {Link, withRouter} from 'react-router-dom'
 import {HiOutlineSearch} from 'react-icons/hi'
 import './index.css'
 
-// const tabs = [
-//   {
-//     id: 'home',
-//     text: 'Home',
-//   },
-//   {
-//     id: 'popular',
-//     text: 'Popular',
-//   },
-// ]
-
 class Navbar extends Component {
   state = {
-    activeTab: 'home',
+    searchInput: '',
   }
 
-  changeToHome = () => {
-    this.setState({activeTab: 'home'})
+  onChangeSearch = event => {
+    this.setState({searchInput: event.target.value})
   }
 
-  changeToPopular = () => {
-    this.setState({activeTab: 'popular'})
-  }
-
-  changeToSearch = () => {
-    this.setState({activeTab: 'search'})
+  onSearchInputData = () => {
+    const {searchInput} = this.state
+    const {onSearch} = this.props
+    onSearch(searchInput)
   }
 
   render() {
-    const {activeTab} = this.state
+    const {searchInput} = this.state
+    let activeTab
+    const {match} = this.props
+    const {path} = match
+    switch (path) {
+      case '/':
+        activeTab = 'home'
+        break
+      case '/popular':
+        activeTab = 'popular'
+        break
+      case '/search':
+        activeTab = 'search'
+        break
+      default:
+        activeTab = null
+        break
+    }
     return (
       <div className="navbar-bg">
         <div>
@@ -43,7 +47,7 @@ class Navbar extends Component {
           />
         </div>
         <ul className="nav-links-list-container">
-          <li className="nav-links-list-item" onClick={this.changeToHome}>
+          <li className="nav-links-list-item">
             <Link
               to="/"
               className={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
@@ -51,7 +55,7 @@ class Navbar extends Component {
               Home
             </Link>
           </li>
-          <li className="nav-links-list-item" onClick={this.changeToPopular}>
+          <li className="nav-links-list-item">
             <Link
               to="/popular"
               className={`nav-link ${activeTab === 'popular' ? 'active' : ''}`}
@@ -62,21 +66,30 @@ class Navbar extends Component {
         </ul>
         <ul className="profile-search-list-container">
           <li className="nav-links-list-item">
-            <Link to="/search" className="search-route-link">
-              {activeTab === 'search' ? (
-                <input type="text" className="search-input" />
-              ) : null}
-              <button
-                type="button"
-                className={`search-button ${
-                  activeTab === 'search' ? 'search-active' : ''
-                }`}
-                data-testid="searchButton"
-                onClick={this.changeToSearch}
-              >
-                <HiOutlineSearch className="search-icon" />
-              </button>
-            </Link>
+            {activeTab === 'search' ? (
+              <div className="search-input-btn-container">
+                <input
+                  type="search"
+                  className="search-input"
+                  onChange={this.onChangeSearch}
+                  value={searchInput}
+                />
+                <button
+                  type="button"
+                  className="search-button search-active"
+                  testid="searchButton"
+                  onClick={this.onSearchInputData}
+                >
+                  <HiOutlineSearch className="search-icon" />
+                </button>
+              </div>
+            ) : (
+              <Link to="/search" className="search-route-link">
+                <button type="button" className="search-button">
+                  <HiOutlineSearch className="search-icon" />
+                </button>
+              </Link>
+            )}
           </li>
           <li className="nav-links-list-item">
             <img
