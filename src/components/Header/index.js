@@ -36,7 +36,7 @@ const Header = props => {
         <div className="header-info-text-container">
           <h1 className="header-movie-heading">{title}</h1>
           <p className="header-movie-description">{overview}</p>
-          <button type="button" className="play-btn-header">
+          <button type="button" className="play-btn-header" testid="playButton">
             Play
           </button>
         </div>

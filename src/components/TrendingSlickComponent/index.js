@@ -72,7 +72,7 @@ class TrendingSlickComponent extends Component {
     <div className="failure-container-fetching">
       <img
         src="https://res.cloudinary.com/dds8wfxdw/image/upload/v1676988437/CCBP-mini%20projects/Movies%20website%20%28netflix%2Cprime%20clone%29/assets/Home%20page/Error-fetch-icon_ndhs8l.svg"
-        alt="error"
+        alt="failure view"
         className="fetch-failure-image-slick"
       />
       <p className="fetch-failure-para">

@@ -34,7 +34,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10%;
+  padding: 7%;
   flex-direction: column;
 }
 .failure-text-popular {
@@ -60,4 +60,5 @@
   align-items: center;
   padding: 10%;
   flex-direction: column;
+  height: 90vh;
 }

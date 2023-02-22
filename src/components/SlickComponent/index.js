@@ -39,13 +39,13 @@ const SlickComponent = props => {
     <div className="main-slick-bg-container">
       <Slider {...settings}>
         {moviesList.map(each => {
-          const {id, title, backdropPath} = each
+          const {id, title, posterPath} = each
           return (
             <div className="slick-item-container" key={id}>
               <Link to={`/movies/${id}`}>
                 <img
                   className="movie-slick-image"
-                  src={backdropPath}
+                  src={posterPath}
                   alt={title}
                 />
               </Link>

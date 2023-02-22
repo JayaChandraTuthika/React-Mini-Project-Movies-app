@@ -51,7 +51,7 @@ class Popular extends Component {
   }
 
   onRetryPopularMovies = () => {
-    this.renderPopularMovies()
+    this.getPopularMovies()
   }
 
   renderPopularMovies = () => {
@@ -86,7 +86,7 @@ class Popular extends Component {
       <button
         type="button"
         className="popular-try-again-btn"
-        onRetry={this.onRetryPopularMovies}
+        onClick={this.onRetryPopularMovies}
       >
         Try Again
       </button>

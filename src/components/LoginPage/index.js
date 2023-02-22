@@ -9,6 +9,7 @@ class LoginPage extends Component {
     username: '',
     password: '',
     showErrorMsg: false,
+    errorMsg: '',
   }
 
   onInputPassword = event => {
@@ -38,8 +39,8 @@ class LoginPage extends Component {
       body: JSON.stringify(userDetails),
     }
     const response = await fetch(loginApiUrl, options)
+    const data = await response.json()
     if (response.ok === true) {
-      const data = await response.json()
       //   console.log(data)
       const jwtToken = data.jwt_token
       Cookies.set('jwt_token', jwtToken, {expires: 30, path: '/'})
@@ -47,7 +48,9 @@ class LoginPage extends Component {
 
       this.onSubmitSuccess()
     } else {
-      this.setState({showErrorMsg: true})
+      const errorMsg = data.error_msg
+
+      this.setState({showErrorMsg: true, errorMsg})
     }
   }
 
@@ -56,10 +59,15 @@ class LoginPage extends Component {
     if (jwtToken !== undefined) {
       return <Redirect to="/" />
     }
-    const {username, password, showErrorMsg} = this.state
+    const {username, password, showErrorMsg, errorMsg} = this.state
 
     return (
       <div className="login-bg-container">
+        <img
+          src="https://res.cloudinary.com/dds8wfxdw/image/upload/v1676920782/CCBP-mini%20projects/Movies%20website%20%28netflix%2Cprime%20clone%29/assets/LOGO_ycujjt.png"
+          alt="login website logo"
+          className="website-logo"
+        />
         <form
           className="login-form-container"
           onSubmit={this.onSubmitLoginDetails}
@@ -85,9 +93,7 @@ class LoginPage extends Component {
             onChange={this.onInputPassword}
             value={password}
           />
-          {showErrorMsg && (
-            <p className="error-msg">Username or Password is Invalid</p>
-          )}
+          {showErrorMsg && <p className="error-msg">{errorMsg}</p>}
           <button type="submit" className="login-btn">
             Login
           </button>
