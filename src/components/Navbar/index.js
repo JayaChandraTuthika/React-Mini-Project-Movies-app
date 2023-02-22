@@ -85,7 +85,11 @@ class Navbar extends Component {
               </div>
             ) : (
               <Link to="/search" className="search-route-link">
-                <button type="button" className="search-button">
+                <button
+                  type="button"
+                  className="search-button"
+                  testid="searchButton"
+                >
                   <HiOutlineSearch className="search-icon" />
                 </button>
               </Link>

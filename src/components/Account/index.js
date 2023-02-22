@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import {FaGoogle} from 'react-icons/fa'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
 
