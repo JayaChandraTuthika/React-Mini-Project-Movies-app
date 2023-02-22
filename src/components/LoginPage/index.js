@@ -43,6 +43,7 @@ class LoginPage extends Component {
       //   console.log(data)
       const jwtToken = data.jwt_token
       Cookies.set('jwt_token', jwtToken, {expires: 30, path: '/'})
+      Cookies.set('user_details', JSON.stringify(userDetails), {expires: 30})
 
       this.onSubmitSuccess()
     } else {

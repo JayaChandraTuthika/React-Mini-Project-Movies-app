@@ -92,11 +92,13 @@ class Navbar extends Component {
             )}
           </li>
           <li className="nav-links-list-item">
-            <img
-              src="https://res.cloudinary.com/dds8wfxdw/image/upload/v1676973451/CCBP-mini%20projects/Movies%20website%20%28netflix%2Cprime%20clone%29/assets/Home%20page/Avatar_maai79.svg"
-              alt="profile"
-              className="profile-pic"
-            />
+            <Link to="/account">
+              <img
+                src="https://res.cloudinary.com/dds8wfxdw/image/upload/v1676973451/CCBP-mini%20projects/Movies%20website%20%28netflix%2Cprime%20clone%29/assets/Home%20page/Avatar_maai79.svg"
+                alt="profile"
+                className="profile-pic"
+              />
+            </Link>
           </li>
         </ul>
       </div>

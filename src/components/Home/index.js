@@ -2,6 +2,7 @@ import {Component} from 'react'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import Header from '../Header'
+import Footer from '../Footer'
 import SlickComponent from '../SlickComponent'
 import TrendingSlickComponent from '../TrendingSlickComponent'
 import './index.css'
@@ -118,6 +119,7 @@ class Home extends Component {
         <TrendingSlickComponent />
         <h1 className="slick-movies-category-heading">Originals</h1>
         {originals}
+        <Footer />
       </div>
     )
   }

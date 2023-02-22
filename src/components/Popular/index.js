@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import Navbar from '../Navbar'
+import Footer from '../Footer'
 
 import './index.css'
 
@@ -120,6 +121,7 @@ class Popular extends Component {
       <div className="popular-main-bg">
         <Navbar />
         {content}
+        <Footer />
       </div>
     )
   }
