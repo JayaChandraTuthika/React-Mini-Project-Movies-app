@@ -1,0 +1,10 @@
+.movie-details-main-bg-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #181818;
+}
+.header-container {
+  height: 500px;
+  background-color: grey;
+}
