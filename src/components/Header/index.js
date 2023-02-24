@@ -21,7 +21,7 @@ class Header extends Component {
 
   componentDidMount() {
     this.getOriginalMovies()
-    console.log('mounted')
+    console.log('mounted Header')
   }
 
   onRetryHeader = () => {

@@ -12,22 +12,21 @@ const statusConstants = {
   failure: 'FAILURE',
 }
 
-class TrendingSlickComponent extends Component {
+class OriginalsSlickComponent extends Component {
   state = {
-    trendingStatus: statusConstants.initial,
-    trendingMoviesList: [],
+    status: statusConstants.initial,
+    originalMoviesList: [],
   }
 
   componentDidMount() {
-    console.log('inside trending')
-    this.getTrendingMovies()
+    console.log('inside original')
+    this.getOriginalMovies()
   }
 
-  getTrendingMovies = async () => {
-    this.setState({trendingStatus: statusConstants.inProgress})
+  getOriginalMovies = async () => {
+    this.setState({status: statusConstants.inProgress})
     const jwtToken = Cookies.get('jwt_token')
-    const getTrendingMoviesApiUrl =
-      'https://apis.ccbp.in/movies-app/trending-movies'
+    const getTrendingMoviesApiUrl = 'https://apis.ccbp.in/movies-app/originals'
     const options = {
       method: 'GET',
       headers: {
@@ -46,21 +45,21 @@ class TrendingSlickComponent extends Component {
         name: each.title,
       }))
       this.setState({
-        trendingMoviesList: updatedData,
-        trendingStatus: statusConstants.success,
+        originalMoviesList: updatedData,
+        status: statusConstants.success,
       })
     } else {
-      this.setState({trendingStatus: statusConstants.failure})
+      this.setState({status: statusConstants.failure})
     }
   }
 
-  renderTrendingSlick = () => {
-    const {trendingMoviesList} = this.state
-    return <SlickComponent moviesList={trendingMoviesList} />
+  renderOriginalSlick = () => {
+    const {originalMoviesList} = this.state
+    return <SlickComponent moviesList={originalMoviesList} />
   }
 
   onRetryData = () => {
-    this.getTrendingMovies()
+    this.getOriginalMovies()
   }
 
   renderLoaderSLickComponent = () => (
@@ -90,26 +89,26 @@ class TrendingSlickComponent extends Component {
   )
 
   render() {
-    const {trendingStatus} = this.state
-    let trending
+    const {status} = this.state
+    let originals
 
-    switch (trendingStatus) {
+    switch (status) {
       case statusConstants.success:
-        trending = this.renderTrendingSlick()
+        originals = this.renderOriginalSlick()
         break
       case statusConstants.inProgress:
-        trending = this.renderLoaderSLickComponent()
+        originals = this.renderLoaderSLickComponent()
         break
       case statusConstants.failure:
-        trending = this.renderFailureSlickData()
+        originals = this.renderFailureSlickData()
         break
 
       default:
-        trending = null
+        originals = null
         break
     }
-    return trending
+    return originals
   }
 }
 
-export default TrendingSlickComponent
+export default OriginalsSlickComponent
