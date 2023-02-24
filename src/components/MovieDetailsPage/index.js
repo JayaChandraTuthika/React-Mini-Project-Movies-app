@@ -71,7 +71,6 @@ class MovieDetailsPage extends Component {
   renderSuccessView = () => {
     const {movieData} = this.state
     const {
-      backdropPath,
       title,
       adult,
       runtime,
