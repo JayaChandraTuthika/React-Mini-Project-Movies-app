@@ -63,7 +63,7 @@ class SearchPage extends Component {
             <li key={each.id} className="search-movie-list-item">
               <Link to={`/movies/${each.id}`} className="link-style">
                 <img
-                  src={each.backdropPath}
+                  src={each.posterPath}
                   alt={each.title}
                   className="movie-list-item-image"
                 />
@@ -73,6 +73,7 @@ class SearchPage extends Component {
         </ul>
       )
     }
+
     return (
       <div className="failure-container-search">
         <img

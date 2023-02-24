@@ -1,5 +1,5 @@
 import Slider from 'react-slick'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import './index.css'
 
 const SlickComponent = props => {
@@ -38,20 +38,15 @@ const SlickComponent = props => {
   return (
     <div className="main-slick-bg-container">
       <Slider {...settings}>
-        {moviesList.map(each => {
-          const {id, title, posterPath} = each
-          return (
-            <div className="slick-item-container" key={id}>
-              <Link to={`/movies/${id}`}>
-                <img
-                  className="movie-slick-image"
-                  src={posterPath}
-                  alt={title}
-                />
-              </Link>
-            </div>
-          )
-        })}
+        {moviesList.map(each => (
+          <div className="slick-item-container" key={each.id}>
+            <img
+              className="movie-slick-image"
+              src={each.posterPath}
+              alt={each.name}
+            />
+          </div>
+        ))}
       </Slider>
     </div>
   )

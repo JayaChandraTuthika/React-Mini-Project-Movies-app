@@ -34,37 +34,35 @@ class Navbar extends Component {
         activeTab = 'search'
         break
       default:
-        activeTab = null
+        activeTab = ''
         break
     }
     return (
       <div className="navbar-bg">
         <div>
-          <img
-            src="https://res.cloudinary.com/dds8wfxdw/image/upload/v1676920782/CCBP-mini%20projects/Movies%20website%20%28netflix%2Cprime%20clone%29/assets/LOGO_ycujjt.png"
-            alt="website logo"
-            className="website-logo"
-          />
+          <Link to="/">
+            <img
+              src="https://res.cloudinary.com/dds8wfxdw/image/upload/v1676920782/CCBP-mini%20projects/Movies%20website%20%28netflix%2Cprime%20clone%29/assets/LOGO_ycujjt.png"
+              alt="website logo"
+              className="website-logo"
+            />
+          </Link>
         </div>
         <ul className="nav-links-list-container">
-          <li className="nav-links-list-item">
-            <Link
-              to="/"
-              className={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
-            >
-              Home
-            </Link>
-          </li>
-          <li className="nav-links-list-item">
-            <Link
-              to="/popular"
-              className={`nav-link ${activeTab === 'popular' ? 'active' : ''}`}
-            >
-              Popular
-            </Link>
-          </li>
+          <Link
+            to="/"
+            className={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
+          >
+            <li className="nav-links-list-item">Home</li>
+          </Link>
+          <Link
+            to="/popular"
+            className={`nav-link ${activeTab === 'popular' ? 'active' : ''}`}
+          >
+            <li className="nav-links-list-item">Popular</li>
+          </Link>
         </ul>
-        <ul className="profile-search-list-container">
+        <div className="profile-search-list-container">
           <li className="nav-links-list-item">
             {activeTab === 'search' ? (
               <div className="search-input-btn-container">
@@ -85,11 +83,7 @@ class Navbar extends Component {
               </div>
             ) : (
               <Link to="/search" className="search-route-link">
-                <button
-                  type="button"
-                  className="search-button"
-                  testid="searchButton"
-                >
+                <button type="button" className="search-button">
                   <HiOutlineSearch className="search-icon" />
                 </button>
               </Link>
@@ -104,7 +98,7 @@ class Navbar extends Component {
               />
             </Link>
           </li>
-        </ul>
+        </div>
       </div>
     )
   }

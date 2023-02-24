@@ -9,7 +9,7 @@ const Footer = () => (
       <FaInstagram className="footer-icon" />
       <FaYoutube className="footer-icon" />
     </div>
-    <p className="contact-us-text ">Contact Us</p>
+    <p className="contact-us-text">Contact us</p>
   </div>
 )
 

@@ -10,3 +10,16 @@
   margin: auto;
   border-radius: 15px;
 }
+
+@media screen and (max-width: 767px) {
+  .movie-slick-image {
+    width: 80%;
+    height: 110px;
+  }
+  .slick-item-container {
+    width: 60vw;
+  }
+  .main-slick-bg-container {
+    margin: 5px 30px;
+  }
+}

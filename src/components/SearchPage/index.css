@@ -6,9 +6,7 @@
   align-items: center;
   background-color: #181818;
 }
-* {
-  /* border: 1px solid white; */
-}
+
 .search-container-bottom-section {
   min-height: 90vh;
   padding: 5% 10%;

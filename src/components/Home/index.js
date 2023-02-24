@@ -17,7 +17,6 @@ const statusConstants = {
 class Home extends Component {
   state = {
     headerStatus: statusConstants.initial,
-
     originalsMoviesList: [],
   }
 
@@ -36,25 +35,31 @@ class Home extends Component {
       },
     }
     const response = await fetch(getOriginalsMoviesApiUrl, options)
-    if (response.ok === true) {
+    if (response.status === 200) {
       const data = await response.json()
       const updatedData = data.results.map(each => ({
         backdropPath: each.backdrop_path,
         id: each.id,
         overview: each.overview,
         posterPath: each.poster_path,
-        title: each.title,
+        name: each.title,
       }))
       this.setState({
         originalsMoviesList: updatedData,
         headerStatus: statusConstants.success,
       })
+    } else {
+      this.setState({headerStatus: statusConstants.failure})
     }
   }
 
   renderOriginals = () => {
     const {originalsMoviesList} = this.state
-    return <SlickComponent moviesList={originalsMoviesList} />
+    return (
+      <>
+        <SlickComponent moviesList={originalsMoviesList} />
+      </>
+    )
   }
 
   renderLoaderSLickComponent = () => (
@@ -88,7 +93,7 @@ class Home extends Component {
   )
 
   render() {
-    const {originalsMoviesList, headerStatus} = this.state
+    const {headerStatus} = this.state
 
     let originals
 
@@ -110,11 +115,7 @@ class Home extends Component {
 
     return (
       <div className="home-bg-container">
-        <Header
-          originalsMoviesList={originalsMoviesList}
-          headerStatus={headerStatus}
-          onRetryData={this.onRetryData}
-        />
+        <Header />
         <h1 className="slick-movies-category-heading">Trending Now</h1>
         <TrendingSlickComponent />
         <h1 className="slick-movies-category-heading">Originals</h1>

@@ -57,3 +57,8 @@
   border-radius: 7px;
   cursor: pointer;
 }
+@media screen and (max-width: 767px) {
+  .slick-movies-category-heading {
+    font-size: 30px;
+  }
+}

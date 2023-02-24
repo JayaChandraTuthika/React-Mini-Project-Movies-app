@@ -36,12 +36,13 @@ class TrendingSlickComponent extends Component {
     const response = await fetch(getTrendingMoviesApiUrl, options)
     if (response.ok === true) {
       const data = await response.json()
+      //   console.log(data)
       const updatedData = data.results.map(each => ({
         backdropPath: each.backdrop_path,
         id: each.id,
         overview: each.overview,
         posterPath: each.poster_path,
-        title: each.title,
+        name: each.title,
       }))
       this.setState({
         trendingMoviesList: updatedData,

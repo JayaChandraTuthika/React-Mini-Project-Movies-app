@@ -2,8 +2,8 @@ import {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-import Navbar from '../Navbar'
 import Footer from '../Footer'
+import Navbar from '../Navbar'
 
 import './index.css'
 
@@ -36,7 +36,7 @@ class Popular extends Component {
       },
     }
     const response = await fetch(getPopularMoviesApiUrl, options)
-    if (response.ok === true) {
+    if (response.status === 200) {
       const data = await response.json()
       const updatedData = data.results.map(each => ({
         id: each.id,
@@ -57,19 +57,22 @@ class Popular extends Component {
   renderPopularMovies = () => {
     const {moviesList} = this.state
     return (
-      <ul className="popular-movies-list-container">
-        {moviesList.map(each => (
-          <li className="popular-movies-list-item" key={each.id}>
+      <>
+        <ul className="popular-movies-list-container">
+          {moviesList.map(each => (
             <Link className="link-item" to={`/movies/${each.id}`}>
-              <img
-                src={each.backdropPath}
-                alt={each.title}
-                className="popular-movie-image"
-              />
+              <li key={each.id} className="popular-movies-list-item">
+                <img
+                  src={each.posterPath}
+                  alt={each.title}
+                  className="popular-movie-image"
+                />
+              </li>
             </Link>
-          </li>
-        ))}
-      </ul>
+          ))}
+        </ul>
+        <Footer />
+      </>
     )
   }
 
@@ -120,8 +123,7 @@ class Popular extends Component {
     return (
       <div className="popular-main-bg">
         <Navbar />
-        {content}
-        <Footer />
+        <div>{content}</div>
       </div>
     )
   }

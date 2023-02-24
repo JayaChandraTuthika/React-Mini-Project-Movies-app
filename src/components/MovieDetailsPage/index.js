@@ -57,7 +57,7 @@ class MovieDetailsPage extends Component {
         voteAverage: movie.vote_average,
         voteCount: movie.vote_count,
       }
-      console.log(updatedData)
+      //   console.log(updatedData)
       this.setState({movieData: updatedData, status: statusConstants.success})
     } else {
       this.setState({status: statusConstants.failure})
@@ -90,13 +90,7 @@ class MovieDetailsPage extends Component {
     const fulldate = format(new Date(releaseDate), 'do MMMM yyyy')
     return (
       <>
-        <div
-          className="header-container-movie-details"
-          style={{
-            background: `linear-gradient(to right,rgba(0, 0, 0, 0.801) ,transparent),url(${backdropPath})`,
-          }}
-        >
-          <Navbar />
+        <div className="header-container-movie-details">
           <div className="header-movie-details-container">
             <h1 className="header-title">{title}</h1>
             <div className="time-adult-year-container">
@@ -113,28 +107,33 @@ class MovieDetailsPage extends Component {
           </div>
         </div>
         <div className="lists-container">
-          <ul className="after-heading-category-list-container">
+          <div>
             <h1 className="list-category-heading">Genres</h1>
-            {genres.map(each => (
-              <li key={each.id} className="list-item-after-header">
-                <p>{each.name}</p>
-              </li>
-            ))}
-          </ul>
-          <ul className="after-heading-category-list-container">
+            <ul className="after-heading-category-list-container">
+              {genres.map(each => (
+                <li key={each.id} className="list-item-after-header">
+                  <p>{each.name}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
             <h1 className="list-category-heading">Audio Available</h1>
-            {spokenLanguages.map(each => (
-              <li key={each.id} className="list-item-after-header">
-                <p>{each.english_name}</p>
-              </li>
-            ))}
-          </ul>
-          <ul className="after-heading-category-list-container">
+            <ul className="after-heading-category-list-container">
+              {spokenLanguages.map(each => (
+                <li key={each.id} className="list-item-after-header">
+                  <p>{each.english_name}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="after-heading-category-list-container">
             <h1 className="list-category-heading">Rating Count</h1>
             <p className="rating-count">{voteCount}</p>
             <h1 className="list-category-heading">Rating Average</h1>
             <p className="rating-count">{voteAverage}</p>
-          </ul>
+          </div>
           <ul className="after-heading-category-list-container">
             <h1 className="list-category-heading">Budget</h1>
             <p className="rating-count">{budget}</p>
@@ -163,7 +162,6 @@ class MovieDetailsPage extends Component {
 
   renderFailureView = () => (
     <div className="movie-details-main-bg-container">
-      <Navbar />
       <div className="failure-container-popular-movies">
         <img
           src="https://res.cloudinary.com/dds8wfxdw/image/upload/v1677008253/CCBP-mini%20projects/Movies%20website%20%28netflix%2Cprime%20clone%29/assets/Popular%20Movies/Failure-image_fk8bhw.svg"
@@ -186,7 +184,6 @@ class MovieDetailsPage extends Component {
 
   renderLoaderView = () => (
     <div className="movie-details-main-bg-container">
-      <Navbar />
       <div className="popular-loader-container" testid="loader">
         <Loader type="TailSpin" color="#D81F26" height={100} width={100} />
       </div>
@@ -212,7 +209,12 @@ class MovieDetailsPage extends Component {
         content = null
         break
     }
-    return <div className="movie-details-main-bg-container">{content}</div>
+    return (
+      <div className="movie-details-main-bg-container">
+        <Navbar />
+        {content}
+      </div>
+    )
   }
 }
 
