@@ -1,5 +1,6 @@
-import {withRouter} from 'react-router-dom'
-
+// import {withRouter} from 'react-router-dom'
+import {Component} from 'react'
+import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import Navbar from '../Navbar'
 
@@ -12,62 +13,96 @@ const statusConstants = {
   failure: 'FAILURE',
 }
 
-const Header = props => {
-  const {originalsMoviesList, headerStatus, onRetryData} = props
-
-  const onRetryHeader = () => {
-    onRetryData()
+class Header extends Component {
+  state = {
+    headerStatus: statusConstants.initial,
+    originalsMoviesList: [],
   }
-  if (headerStatus === statusConstants.success) {
+
+  componentDidMount() {
+    this.getOriginalMovies()
+    console.log('mounted')
+  }
+
+  onRetryHeader = () => {
+    this.getOriginalMovies()
+  }
+
+  getOriginalMovies = async () => {
+    this.setState({headerStatus: statusConstants.inProgress})
+    const jwtToken = Cookies.get('jwt_token')
+    const getOriginalsMoviesApiUrl = 'https://apis.ccbp.in/movies-app/originals'
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    }
+    try {
+      const response = await fetch(getOriginalsMoviesApiUrl, options)
+      const data = await response.json()
+      const updatedData = data.results.map(each => ({
+        backdropPath: each.backdrop_path,
+        id: each.id,
+        overview: each.overview,
+        posterPath: each.poster_path,
+        name: each.title,
+      }))
+      this.setState({
+        originalsMoviesList: updatedData,
+        headerStatus: statusConstants.success,
+      })
+    } catch (e) {
+      this.setState({headerStatus: statusConstants.failure})
+    }
+  }
+
+  getHeader = () => {
+    const {originalsMoviesList} = this.state
     const posterMovieDetails =
       originalsMoviesList[
         Math.floor(Math.random() * originalsMoviesList.length)
       ]
-    const {backdropPath, title, overview} = posterMovieDetails
+    const {name, overview} = posterMovieDetails
 
     return (
-      <div
-        className="header-container"
-        style={{
-          background: `linear-gradient(to right,rgba(0, 0, 0, 0.801) ,transparent),url(${backdropPath})`,
-        }}
-      >
+      <div className="header-container">
         <Navbar />
         <div className="header-info-text-container">
-          <h1 className="header-movie-heading">{title}</h1>
+          <h1 className="header-movie-heading">{name}</h1>
           <p className="header-movie-description">{overview}</p>
-          <button type="button" className="play-btn-header" testid="playButton">
+          <button type="button" className="play-btn-header">
             Play
           </button>
         </div>
       </div>
     )
   }
-  if (headerStatus === statusConstants.failure) {
-    return (
-      <div className="header-container">
-        <Navbar />
-        <div className="failure-container-fetching-header">
-          <img
-            src="https://res.cloudinary.com/dds8wfxdw/image/upload/v1676988437/CCBP-mini%20projects/Movies%20website%20%28netflix%2Cprime%20clone%29/assets/Home%20page/Error-fetch-icon_ndhs8l.svg"
-            alt="error"
-            className="fetch-failure-image-slick"
-          />
-          <p className="fetch-failure-para">
-            Something went wrong. Please try again
-          </p>
-          <button
-            type="button"
-            className="fetch-failure-try-again-btn"
-            onClick={onRetryHeader}
-          >
-            Try Again
-          </button>
-        </div>
+
+  getFailureHeader = () => (
+    <div className="header-container">
+      <Navbar />
+      <div className="failure-container-fetching-header">
+        <img
+          src="https://res.cloudinary.com/dds8wfxdw/image/upload/v1676988437/CCBP-mini%20projects/Movies%20website%20%28netflix%2Cprime%20clone%29/assets/Home%20page/Error-fetch-icon_ndhs8l.svg"
+          alt="error"
+          className="fetch-failure-image-slick"
+        />
+        <p className="fetch-failure-para">
+          Something went wrong. Please try again
+        </p>
+        <button
+          type="button"
+          className="fetch-failure-try-again-btn"
+          onClick={this.onRetryHeader}
+        >
+          Try Again
+        </button>
       </div>
-    )
-  }
-  return (
+    </div>
+  )
+
+  getLoaderView = () => (
     <div className="header-container">
       <Navbar />
       <div className="header-loader-container" testid="loader">
@@ -75,6 +110,34 @@ const Header = props => {
       </div>
     </div>
   )
+
+  render() {
+    const {headerStatus} = this.state
+    let header
+    switch (headerStatus) {
+      case statusConstants.success:
+        header = this.getHeader()
+        break
+      case statusConstants.failure:
+        header = this.getFailureHeader()
+        break
+      case statusConstants.inProgress:
+        header = this.getLoaderView()
+        break
+
+      default:
+        header = null
+        break
+    }
+
+    return header
+  }
+
+  // console.log(posterMovieDetails)
+
+  //   style={{
+  //         background: `linear-gradient(to right,rgba(0, 0, 0, 0.801) ,transparent),url(${backdropPath})`,
+  //       }}
 }
 
-export default withRouter(Header)
+export default Header

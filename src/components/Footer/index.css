@@ -24,5 +24,14 @@
   font-family: 'Hanken Grotesk', sans-serif;
   font-size: 30px;
   font-weight: 400;
-  cursor: pointer;
+}
+@media screen and (max-width: 767px) {
+  .contact-us-text {
+    font-size: 26px;
+    font-weight: 500;
+  }
+  .footer-icon {
+    height: 30px;
+    width: 30px;
+  }
 }
